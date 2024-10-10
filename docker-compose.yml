@@ -1,11 +1,28 @@
 version: '3.8'
 
 services:
+  backend:
+    build: ./backend
+    command: npm run start:dev
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+
   frontend:
     build: ./frontend
-    command: npm run start:dev
+    command: npm start
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
       - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
